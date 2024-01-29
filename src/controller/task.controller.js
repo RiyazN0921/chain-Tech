@@ -99,7 +99,6 @@ exports.deleteTask = async (req, res, next) => {
     const task = await Task.findOne({ _id: taskId, userId })
 
     if (!task) {
-      console.log(`Task not found with ID: ${taskId} and user ID: ${userId}`)
       throw new CustomError('Task not found', 404)
     }
 
@@ -107,7 +106,38 @@ exports.deleteTask = async (req, res, next) => {
 
     res.json({ message: 'Task deleted successfully' })
   } catch (error) {
-    console.error(error.message)
     next(new CustomError('An error occurred while deleting the task!', 500))
+  }
+}
+
+exports.getTaskByTitleName = async (req, res, next) => {
+  try {
+    const title = req.params.title
+
+    const task = await Task.findOne({ title })
+
+    if (!task) {
+      throw new CustomError('Task not found not this title', 404)
+    }
+
+    res.status(200).json({ data: task, success: true })
+  } catch (error) {
+    next(new CustomError('An error occurred while fetching the task!', 500))
+  }
+}
+
+exports.getByCategory = async (req, res) => {
+  try {
+    const category = req.params.category
+
+    const tasks = await Task.find({ category })
+
+    if (!tasks || tasks.length === 0) {
+      throw new CustomError('Task not found for this category', 404)
+    }
+
+    res.json(tasks)
+  } catch (error) {
+    next(new CustomError('An error occurred while fetching the task!', 500))
   }
 }

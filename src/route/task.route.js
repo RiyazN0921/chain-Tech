@@ -44,4 +44,8 @@ router.put('/:id', taskController.editTask)
 
 router.delete('/:id', taskController.deleteTask)
 
+router.get('/title/:title', taskController.getTaskByTitleName)
+
+router.get('/category/:category', taskController.getByCategory)
+
 module.exports = router
