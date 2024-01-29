@@ -1,11 +1,7 @@
 const bcrypt = require('bcrypt')
-
 const User = require('../model/user.model')
-
 const { CustomError } = require('../middleware/errorHandler.middleware')
-
 const { generateAuthToken } = require('../middleware/jwt.middleware')
-
 require('dotenv').config()
 const secretKey = process.env.JWT_SECRET_KEY
 

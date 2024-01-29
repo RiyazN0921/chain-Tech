@@ -28,6 +28,8 @@ app.get('/', (req, res, next) => {
 
 app.use('/api/user', require('./src/route/user.route'))
 
+app.use('/api/task', require('./src/route/task.route'))
+
 app.use(errorHandler)
 
 app.listen(port, async () => {
