@@ -2,9 +2,10 @@ const express = require('express')
 
 const bodyparser = require('body-parser')
 
-const { dbConnection } = require('./config/db.config')
+const { dbConnection } = require('./src/config/db.config')
 
 const cors = require('cors')
+const { errorHandler } = require('./src/middleware/errorHandler.middleware')
 
 const app = express()
 
@@ -24,6 +25,10 @@ app.get('/', (req, res, next) => {
     next(error)
   }
 })
+
+app.use('/api/user', require('./src/route/user.route'))
+
+app.use(errorHandler)
 
 app.listen(port, async () => {
   console.log('server listening on port ' + port)
